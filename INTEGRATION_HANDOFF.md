@@ -13,7 +13,7 @@ Both HTML files are standalone, with embedded CSS/JS. No external build required
 
 ## Current product contract (important)
 
-There is ONE source platform: Telegram. The homepage animation must depict Telegram -> processing/AI -> multiple destination channels. Telegram publishing is the current scenario; Facebook, Instagram, YouTube and other destinations are PLANNED, not active. The dashboard demo may contain aspirational source UI and must be restricted accordingly during integration.
+There is ONE source platform: Telegram, with MANY independent donor channels/accounts feeding the ingestion pipeline. The homepage animation must depict multiple Telegram donor channels -> processing/AI -> multiple destination channels. Telegram publishing is the current scenario; Facebook, Instagram, YouTube and other destinations are PLANNED, not active. The dashboard demo may contain aspirational source UI and must be restricted accordingly during integration.
 
 ## Intended product boundaries
 
@@ -32,7 +32,7 @@ Dashboard: authenticated tenant workspace. Existing demo sections include dashbo
 7. Map AI Studio to asynchronous translation/rewriting tasks; show original, generated result, editing, approval and failures. Never place AI API keys in browser.
 8. Map publishing and calendar to real queue/scheduled jobs with idempotency, status, retries and audit trail. Display returned backend statuses.
 9. Map channels to Telegram account/channel permissions and real connection state. Other social platforms are planned publication destinations, not available functionality. Do not mislabel destinations as ingestion sources.
-10. Map analytics only when real metrics exist; never display demo numbers as live business metrics.
+10. Map analytics only when real metrics exist; never display demo numbers as live business metrics. AI Usage & Costs is now a separate demo section: requests, input/output/cache tokens, cache hit rate, off-peak usage, cost, latency, daily history, model and tenant breakdowns. Collect these server-side and enforce tenant isolation. Customer view shows own usage; Admin view shows aggregate and per-tenant costs.
 11. Map billing to actual subscription status and approved checkout flow. Billing provider credentials and webhooks belong server-side; do not expose secrets.
 12. Map admin to authorized admin roles, with strict tenant isolation. Hide unauthorized controls, but enforce authorization on backend.
 

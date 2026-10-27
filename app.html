@@ -35,6 +35,34 @@ body{background:#edf2f4}
 .toast{background:#284854}
 :focus-visible{outline:2px solid #2c9aa0;outline-offset:2px}
 @media(prefers-reduced-motion:reduce){.btn,.nav button{transition:none}}
+
+/* Approved refinement: neutral brushed silver steel; no teal/green/purple chrome. */
+:root{color:#263440;background:#f1f3f5}
+body{background:#f1f3f5}
+.sidebar{background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,#ffffff08 4px),linear-gradient(112deg,#414b55 0%,#303b45 36%,#515d67 65%,#313b45 100%);border-right-color:#88939b}
+.logo span{color:#d9e2e8}
+.nav button.active,.nav button:hover{color:#25313b;background:linear-gradient(160deg,#fcfdfe,#dce3e8 34%,#a7b3bd 77%,#e9eef1);border-color:#d4dce2}
+.plan{background:linear-gradient(135deg,#65717b,#414d58 58%,#596570);border-color:#8f9aa3}
+.progress b{background:linear-gradient(90deg,#8999a7,#c8d2da)}
+.top{background:linear-gradient(180deg,#fff,#e9edf0);border-bottom-color:#c9d1d7}
+.search{background:linear-gradient(180deg,#fff,#edf1f3);border-color:#c2cbd2}
+.eyebrow{color:#74828c}p,.muted{color:#73808a}h1,h2{color:#263642}
+.btn{color:#2d3d48;border-color:#aab6bf;background:linear-gradient(165deg,#fff 0%,#edf1f4 28%,#bec9d2 75%,#f6f8f9 100%)}
+.btn.primary,.primary{color:#1c2e3b;background:linear-gradient(160deg,#f6f8fa 0%,#c7d1d9 38%,#8797a5 78%,#dbe2e7 100%);border-color:#8595a1;box-shadow:inset 0 1px #fff,0 3px 9px #34495728;text-shadow:0 1px #ffffffa0}
+.hero{background:linear-gradient(115deg,#fff 0%,#eff2f4 55%,#d9e0e5 100%);border-color:#cbd4db}
+.ai{background:linear-gradient(145deg,#f5f8fa,#aab9c5 45%,#647889);box-shadow:inset 0 2px #fff9,0 13px 28px #596c7a40;color:#223440}
+.arr,.flowarrow{color:#798d9d}
+.logoicon,.card,.platform{border-color:#d0d8de;background:linear-gradient(180deg,#fff 0%,#fbfcfd 75%,#f1f4f6 100%)}
+.thumb{background:linear-gradient(130deg,#f0f3f6,#cbd5dd)}
+.pill{background:#e6ebef;color:#536776}.pill.green{background:#e5eaf0;color:#506576}.pill.orange{background:#f2eee7;color:#8a7460}.pill.red{background:#f4e8e8;color:#9e6262}
+.platform .icon{background:linear-gradient(150deg,#fff,#d5dfe6);border-color:#d3dce2}
+.node,.route,.day{border-color:#d0d9df}
+.notice{background:#eef2f5;border-color:#d0d9e0;color:#536b7b}
+.event{background:#e4eaf0;color:#526c80}
+.bars div{background:linear-gradient(180deg,#d2dde5 0%,#9aabb9 42%,#667b8d 100%);box-shadow:inset 1px 0 #fff7}
+.topbadge{color:#6a7b88}
+.field input,.field select,.field textarea,select{border-color:#c8d1d8}
+:focus-visible{outline-color:#7e93a3}
 </style></head><body><div class="app"><aside class="sidebar"><div class="logo">◈ Channel<span>Master</span></div><nav id="nav" class="nav"></nav><div class="plan"><b>✦ Pro Workspace</b><small>Каналы · 9 / 20</small><div class="progress"><b></b></div><small>Публикации · 1240 / 5000</small><div class="progress"><b style="width:25%"></b></div><button class="btn" style="margin-top:13px;width:100%" onclick="go('billing')">Тариф ↗</button></div></aside><div class="workspace"><header class="top"><input class="search" placeholder="⌕ Поиск по контенту..." oninput="search(this.value)"><div class="flex"><span class="topbadge">● DESIGN DEMO</span><button class="btn primary" onclick="modal('post')">＋ Создать пост</button></div></header><main id="main" class="main"></main></div></div><div class="modalbg" id="modalbg" onclick="if(event.target===this)closeModal()"><div class="modal" id="modal"></div></div><div class="toast" id="toast"></div><script>
 const sections=[['home','⌂','Главная'],['sources','◉','Источники'],['inbox','▤','Контент'],['routes','⌁','Маршруты'],['studio','✎','AI Studio'],['publish','➤','Публикации'],['calendar','▦','Календарь'],['channels','◈','Каналы'],['analytics','▥','Аналитика'],['aiusage','◫','AI Usage & Costs'],['media','▧','Медиа'],['billing','◇','Тариф'],['admin','⚙','Админ']];let page='home',filter='all';const posts=[['🏙️','Города будущего: как меняется архитектура','@urban_digest','new'],['🏔️','Пять маршрутов для осенних путешествий','@travel_notes','draft'],['🤖','Как AI помогает небольшим компаниям','@tech_today','scheduled'],['🎬','Новый сезон: советы для авторов','@creator_lab','published']];const status={new:'Новый',draft:'Черновик',scheduled:'В очереди',published:'Опубликован'};let routes=[['Новости технологий → EN','@tech_today → @tech_world','Фильтр → Перевод → Черновик',true],['Travel Digest → Multi-channel','@travel_notes → Instagram (план)','AI адаптация → Согласование',false]];
 function badge(s,c=''){return '<span class="pill '+c+'">'+s+'</span>'}function btn(t,fn,cls=''){return '<button class="btn '+cls+'" onclick="'+fn+'">'+t+'</button>'}function heading(k,t,d,action=''){return '<div class="heading"><div><div class="eyebrow">'+k+'</div><h1>'+t+'</h1><p>'+d+'</p></div>'+action+'</div>'}function card(t,body){return '<div class="card"><h2>'+t+'</h2>'+body+'</div>'}function item(p,i){return '<div class="item searchable"><div class="thumb">'+p[0]+'</div><div class="grow"><strong>'+p[1]+'</strong><small>✈ '+p[2]+' · Telegram</small></div>'+badge(status[p[3]],p[3]==='published'?'green':p[3]==='new'?'orange':'')+btn('Открыть','post('+i+')')+'</div>'}function go(id){page=id;document.getElementById('nav').innerHTML=sections.map(s=>'<button class="'+(s[0]===id?'active':'')+'" onclick="go(\''+s[0]+'\')"><i>'+s[1]+'</i><span class="label">'+s[2]+'</span></button>').join('');render();scrollTo(0,0)}function render(){let h='';
